@@ -14,6 +14,7 @@ import (
 type Store struct {
 	User  UserStore
 	Notes NotesStore
+	Tasks TasksStore
 }
 
 // NewStore initializes the DB connection and returns a new Store
@@ -48,6 +49,7 @@ func NewStore() *Store {
 
 	userCollection := client.Database("go-lang-auth-db").Collection("user")
 	notesCollection := client.Database("go-lang-auth-db").Collection("note")
+	tasksCollection := client.Database("go-lang-auth-db").Collection("task")
 
 	// Return the store containing the UserStore
 	return &Store{
@@ -56,6 +58,9 @@ func NewStore() *Store {
 		},
 		Notes: NotesStore{
 			collection: notesCollection,
+		},
+		Tasks: TasksStore{
+			collection: tasksCollection,
 		},
 	}
 }
