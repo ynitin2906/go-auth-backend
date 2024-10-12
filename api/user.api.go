@@ -165,10 +165,12 @@ func CommonUserGet(c *fiber.Ctx, store *db.Store, id primitive.ObjectID) error {
 	}
 
 	notes, err := store.Notes.List(c.Context(), id)
+	tasks, err := store.Tasks.List(c.Context(), id)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching notes", http.StatusInternalServerError, nil))
 	}
 	user.Notes = notes
+	user.Tasks = tasks
 	return c.Status(fiber.StatusOK).JSON(types.CreateSuccessResponse("User retrieved successfully", fiber.StatusOK, user))
 }
 
