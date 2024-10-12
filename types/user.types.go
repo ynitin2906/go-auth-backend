@@ -14,6 +14,7 @@ type User struct {
 	Password       string             `json:"password"`
 	Role           string             `json:"role"`
 	Notes          []*Notes           `json:"notes"`
+	Tasks          []*Tasks           `json:"tasks"`
 	ProfilePicture string             `json:"profile_picture" bson:"profile_picture"`
 	SocialMedia    SocialMedia        `json:"social_media"    bson:"social_media"`
 }
@@ -28,6 +29,7 @@ type UserResponse struct {
 	Name           string             `json:"name" `
 	Email          string             `json:"email"`
 	Notes          []*Notes           `json:"notes"`
+	Tasks          []*Tasks           `json:"tasks"`
 	ProfilePicture string             `json:"profile_picture" bson:"profile_picture"`
 	SocialMedia    SocialMedia        `json:"social_media"    bson:"social_media"`
 }

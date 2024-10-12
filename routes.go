@@ -16,6 +16,7 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 
 	setupLoggedInUserRoutes(app, store)
 	setupNoteRoutes(app, store)
+	setupTasksRoutes(app, store)
 
 	// app.Use(middleware.AdminMiddleware)
 	setupAdminRoutes(app, store)
@@ -90,6 +91,32 @@ func setupNoteRoutes(app *fiber.App, store *db.Store) {
 
 	app.Delete("/notes/:id", func(c *fiber.Ctx) error {
 		return api.DeleteNote(c, store)
+	})
+
+}
+func setupTasksRoutes(app *fiber.App, store *db.Store) {
+
+	app.Get("/tasks/user", func(c *fiber.Ctx) error {
+		return api.GetAllTasksForLoginUser(c, store)
+	})
+	app.Get("/tasks/user/:id", func(c *fiber.Ctx) error {
+		return api.GetAllTasksForUserById(c, store)
+	})
+
+	app.Get("/task/:id", func(c *fiber.Ctx) error {
+		return api.GetSingleTask(c, store)
+	})
+
+	app.Post("/tasks", func(c *fiber.Ctx) error {
+		return api.CreateTask(c, store)
+	})
+
+	app.Patch("/tasks/:id", func(c *fiber.Ctx) error {
+		return api.UpdateTask(c, store)
+	})
+
+	app.Delete("/tasks/:id", func(c *fiber.Ctx) error {
+		return api.DeleteTask(c, store)
 	})
 
 }
