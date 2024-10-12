@@ -18,10 +18,10 @@ func main() {
 	// Initialize Fiber
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000, https://go-auth-backend-fr6g.onrender.com", // Frontend origin
-		AllowMethods:     "GET, POST, PUT, PATCH, DELETE, OPTIONS",                           // Allowed methods
-		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",                      // Allow Authorization header
-		AllowCredentials: true,                                                               // If using credentials like cookies or authorization
+		AllowOrigins:     "http://localhost:3000, https://go-auth-frontend.onrender.com/", // Frontend origin
+		AllowMethods:     "GET, POST, PUT, PATCH, DELETE, OPTIONS",                        // Allowed methods
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",                   // Allow Authorization header
+		AllowCredentials: true,                                                            // If using credentials like cookies or authorization
 	}))
 
 	// Initialize database and store
