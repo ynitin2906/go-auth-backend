@@ -25,7 +25,13 @@ func GetAllUsers(c *fiber.Ctx, store *db.Store) error {
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching notes for user", http.StatusInternalServerError, nil))
 		}
-		user.Notes = notes // Append notes to the user object
+		tasks, err := store.Tasks.List(c.Context(), user.Id)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching tasks for user", http.StatusInternalServerError, nil))
+		}
+
+		user.Notes = notes
+		user.Tasks = tasks
 	}
 
 	return c.Status(fiber.StatusOK).JSON(types.CreateSuccessResponse("Users retrieved successfully", fiber.StatusOK, users))
@@ -165,7 +171,13 @@ func CommonUserGet(c *fiber.Ctx, store *db.Store, id primitive.ObjectID) error {
 	}
 
 	notes, err := store.Notes.List(c.Context(), id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching notes for user", http.StatusInternalServerError, nil))
+	}
 	tasks, err := store.Tasks.List(c.Context(), id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching tasks for user", http.StatusInternalServerError, nil))
+	}
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(types.CreateErrorResponse("Error fetching notes", http.StatusInternalServerError, nil))
 	}
