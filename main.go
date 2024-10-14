@@ -3,6 +3,7 @@ package main
 import (
 	"golang-auth/db"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -10,11 +11,16 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
+	if os.Getenv("RENDER") == "" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Println("Error loading .env file")
+		}
 	}
-
 	// Initialize Fiber
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
